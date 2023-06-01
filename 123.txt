@@ -1,0 +1,97 @@
+#Тестовый дискретный сигнал напряжения для простых функций:
+#Линейная функция
+x = np.arange(0,4,0.1)
+y = 2*x
+plt.figure(1)
+plt.plot(x,y,'b',linewidth=2,label='f(x)')
+plt.grid()
+plt.xlabel('t, с')
+plt.ylabel('U(t), В')
+plt.title('График линейной функции')
+plt.legend()
+#Рассчитаем производную линейной функции
+def diff(x,y):
+  n = len(x)
+  dy1 = np.zeros(n-1)
+  for k in range(0,n-1,1):
+    dy1[k] = (y[k+1]-y[k])/(x[k+1]-x[k])
+  return dy1
+dy1 = diff(x,y)
+n = len(x)
+x1 = x[0:n-1]
+plt.figure(2)
+plt.plot(x1,dy1,'b',linewidth=2,label='f(x)')
+plt.grid()
+plt.xlabel('t, с')
+plt.ylabel('U(t), В')
+plt.title('График производной линейной функции')
+plt.legend()
+#Рассчитаем интеграл линейной функции
+f = 0
+for k in range(0,n-1,1):
+  f = f + y[k]*(x[k+1]-x[k])
+print('Результат расчёта интеграла линейной функции =',f)
+
+
+#Парабола
+y = x**2
+plt.figure(3)
+plt.plot(x,y,'b',linewidth=2,label='f(x)')
+plt.grid()
+plt.xlabel('t, с')
+plt.ylabel('U(t), В')
+plt.title('График параболы')
+plt.legend()
+#Рассчитаем производную параболы
+dr = np.zeros(n-1)
+for k in range(0,n-1,1):
+  dr[k] = (y[k+1]-y[k])/(x[k+1]-x[k])
+dr = diff(x,y)
+plt.figure(4)
+plt.plot(x1,dr,'b',linewidth=2,label='f(x)')
+plt.grid()
+plt.xlabel('t, с')
+plt.ylabel('U(t), В')
+plt.title('График производной параболы')
+plt.legend()
+#Рассчитаем интеграл параболы
+s = 0
+for k in range(0,n-1,1):
+  s = s + y[k]*(x[k+1]-x[k])
+print('Результат расчёта интеграла параболы =',s)
+
+
+
+
+
+
+#Основная программа:
+#Исходный дискретный сигнал
+x = np.linspace(1,1.2,4000)
+y = abs(np.sin(x*60)) + 2 * np.cos(x*180)
+plt.figure(figsize=(7,5))
+plt.plot(x,y,'b',linewidth=2,label='f(x)')
+plt.grid()
+plt.xlabel('t, с')
+plt.ylabel('U(t), В')
+plt.title('График исходного сигнала')
+plt.legend()
+#Производная дискретного сигнала
+dy = np.zeros(n-1)
+for k in range(0,n-1,1):
+  dy[k] = (y[k+1]-y[k])/(x[k+1]-x[k])
+dy = diff(x,y)
+n = len(x)
+x1 = x[0:n-1]
+plt.figure(figsize=(7,5))
+plt.plot(x1,dy,'b',linewidth=2,label='f(x)')
+plt.grid()
+plt.xlabel('t, с')
+plt.ylabel('U(t), В')
+plt.title('График производной сигнала')
+plt.legend()
+#Интеграл дискретного сигнала
+S = 0
+for k in range(0,n-1,1):
+  S = S + y[k]*(x[k+1]-x[k])
+print('Результат расчёта интеграла дискретного сигнала =',S)
